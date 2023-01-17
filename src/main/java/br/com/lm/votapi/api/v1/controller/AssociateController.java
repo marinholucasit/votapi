@@ -24,7 +24,6 @@ public class AssociateController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Create associate")
     public ResponseEntity<AssociateResponse> create(@Valid @RequestBody AssociateRequest associateRequest){
         Associate associate = associateService.save(associateRequest.mapToAssociate());
         return ResponseEntity.ok(new AssociateResponse(associate));
@@ -32,7 +31,6 @@ public class AssociateController {
 
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get associate by Id")
     public ResponseEntity<AssociateResponse> getById(@PathVariable Long id){
         Optional<Associate> associate = associateService.getById(id);
 
