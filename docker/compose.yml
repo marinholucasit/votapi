@@ -1,0 +1,23 @@
+version: '3.5'
+
+services:
+  votos-postgres:
+    container_name: api-postgres
+    image: postgres:12.7-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    networks:
+      - api-network
+
+volumes:
+  database-data:
+
+networks:
+  api-network:
+    name: api-network
