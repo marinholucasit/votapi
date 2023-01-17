@@ -6,6 +6,8 @@ import br.com.lm.votapi.service.PautaService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class PautaServiceImpl implements PautaService {
@@ -14,5 +16,10 @@ public class PautaServiceImpl implements PautaService {
     @Override
     public Pauta save(Pauta pauta) {
         return pautaRepository.save(pauta);
+    }
+
+    @Override
+    public Optional<Pauta> getById(Long id) {
+        return pautaRepository.findById(id);
     }
 }
