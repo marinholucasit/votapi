@@ -22,7 +22,7 @@ public class Vote {
 
     @ManyToOne
     @NotNull
-    @JoinColumn(name = "id_associate")
+    @JoinColumn(name = "associate_id")
     private Associate associate;
 
     @Enumerated(EnumType.STRING)
@@ -31,10 +31,10 @@ public class Vote {
 
     @NotNull
     @Builder.Default
-    private LocalDateTime dataVoto = LocalDateTime.now();
+    private LocalDateTime voteDate = LocalDateTime.now();
 
     @NotNull
     @ManyToOne()
-    @JoinColumn(name = "id_session")
+    @JoinColumn(name = "session_id")
     private Session session;
 }

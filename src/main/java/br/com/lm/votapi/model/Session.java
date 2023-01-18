@@ -34,7 +34,7 @@ public class Session {
 
     private Integer availableMinutes;
 
-    public Boolean Ativa() {
+    public Boolean active() {
         return  endDate.isAfter(LocalDateTime.now());
     }
 }
