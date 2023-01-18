@@ -40,6 +40,10 @@ public class SessionServiceImpl implements SessionService {
         return sessionRepository.save(newSession);
     }
 
+    public Optional<Session> getById(Long id) {
+        return sessionRepository.findById(id);
+    }
+
     private Pauta getPautaById(Long id) {
         return pautaService.getById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Pauta not found"));
