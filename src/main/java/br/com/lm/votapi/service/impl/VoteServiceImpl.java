@@ -2,15 +2,13 @@ package br.com.lm.votapi.service.impl;
 
 import br.com.lm.votapi.api.v1.dto.request.VoteRequest;
 import br.com.lm.votapi.api.v1.dto.response.VoteResponse;
-import br.com.lm.votapi.exception.AssociateNotFoundException;
-import br.com.lm.votapi.exception.DuplicatedVoteException;
-import br.com.lm.votapi.exception.SessionInactiveException;
-import br.com.lm.votapi.exception.SessionNotFound;
+import br.com.lm.votapi.exception.*;
 import br.com.lm.votapi.model.Associate;
 import br.com.lm.votapi.model.Session;
 import br.com.lm.votapi.model.Vote;
 import br.com.lm.votapi.repository.VoteRepository;
 import br.com.lm.votapi.service.AssociateService;
+import br.com.lm.votapi.service.CpfService;
 import br.com.lm.votapi.service.SessionService;
 import br.com.lm.votapi.service.VoteService;
 import lombok.AllArgsConstructor;
@@ -25,6 +23,7 @@ public class VoteServiceImpl implements VoteService {
     private final AssociateService associateService;
     private final SessionService sessionService;
     private final VoteRepository voteRepository;
+    private final CpfService cpfService;
 
     @Override
     public VoteResponse save(VoteRequest voteRequest) {
@@ -42,8 +41,15 @@ public class VoteServiceImpl implements VoteService {
     }
 
     private void validations(Vote vote, VoteRequest voteRequest) {
+        verifyCpfExternalApi(voteRequest.getCpf());
         verifyDuplicatedVote(vote);
         verifySessionActive(voteRequest);
+    }
+
+    private void verifyCpfExternalApi(String cpf) {
+        if (!cpfService.cpfAllowedVote(cpf)) {
+            throw new CpfCanNotVoteException();
+        }
     }
 
     private void verifySessionActive(VoteRequest voteRequest) {
