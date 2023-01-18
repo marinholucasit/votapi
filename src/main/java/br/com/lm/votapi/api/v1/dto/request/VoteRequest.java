@@ -26,5 +26,5 @@ public class VoteRequest {
     private VoteValue vote;
 
     @NotNull
-    private Long sessaoVotacao;
+    private Long voteSession;
 }
