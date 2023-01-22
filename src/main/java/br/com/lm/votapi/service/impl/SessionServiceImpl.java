@@ -7,6 +7,7 @@ import br.com.lm.votapi.repository.SessionRepository;
 import br.com.lm.votapi.service.PautaService;
 import br.com.lm.votapi.service.SessionService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
+@Log4j2
 public class SessionServiceImpl implements SessionService {
 
     private final PautaService pautaService;
@@ -26,6 +28,7 @@ public class SessionServiceImpl implements SessionService {
         Pauta pauta = getPautaById(sessionRequest.getPautaId());
         int availableMinutes = Optional.ofNullable(sessionRequest.getAvailableMinutes()).orElse(1);
         if (verifyPautaActive(pauta)) {
+            log.info("There is an active session for this pauta id {}", pauta.getId());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "There is an active session for this pauta" + pauta.getId());
         }

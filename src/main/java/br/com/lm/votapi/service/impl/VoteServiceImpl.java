@@ -12,12 +12,14 @@ import br.com.lm.votapi.service.CpfService;
 import br.com.lm.votapi.service.SessionService;
 import br.com.lm.votapi.service.VoteService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @AllArgsConstructor
 @Service
+@Log4j2
 public class VoteServiceImpl implements VoteService {
 
     private final AssociateService associateService;
@@ -61,6 +63,9 @@ public class VoteServiceImpl implements VoteService {
     }
 
     private void verifyDuplicatedVote(Vote vote) {
+        log.info("Verify duplicated vote to CPF {} in the session {}",
+                vote.getAssociate().getCpf(),
+                vote.getSession().getId());
         Optional<Vote> voteExits = voteRepository.findByAssociate_idAndSession_Id(
                 vote.getAssociate().getId(),
                 vote.getSession().getId()
