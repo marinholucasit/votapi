@@ -25,8 +25,11 @@ public class CpfServiceImpl implements CpfService {
             log.info("response: {}", cpfResponse.getStatus());
             return (cpfResponse.getStatus().toUpperCase().equals(ABLE_TO_VOTE))? false: true;
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid cpf");
+            log.error("Error to validate cpf in external api: "+e.getMessage());
+            return localRole();
         }
 
     }
+
+    private boolean localRole() {return true;}
 }
